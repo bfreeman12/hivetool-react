@@ -13,6 +13,32 @@ function App() {
   function toggleInstructionsModal() {
     document.getElementById('instructions-page').classList.toggle('visible')
   }
+
+  function formatOperatorInitials() {
+    let operatorInitials = document.getElementById('initials-input').value
+    return operatorInitials
+  }
+  function formatMitreVectors() {
+    let mitreVectors = document.getElementById('attack-vector-input').value
+    return mitreVectors
+  }
+  function formatSuricataAlerts() {
+    let suricataAlerts = document.getElementById('alert-input').value
+    return suricataAlerts
+  }
+  function formatDescription() {
+    let description = document.getElementById('description-input').value
+    return description
+  }
+  function formatRecommendedRemediation() {
+    let recommendedRemediation = document.getElementById('remediation-input').value
+    return recommendedRemediation
+  }
+
+  function formatInputtedData(operatorInitials, mitreVectors, suricataAlerts, description, recommendedRemediation) {
+    let formattedData = operatorInitials + mitreVectors + suricataAlerts + description + recommendedRemediation
+    document.getElementById('formatted-output').innerText = formattedData
+  }
   return (
     <div id="content-container" className="content-container">
       <div id="instructions-button" className="instructions-button" title="tooltip" onClick={toggleInstructionsModal}>Instructions</div>
@@ -78,7 +104,7 @@ function App() {
             </label>
           </div>
         </div>
-        <button id="submit-button">Format!</button>
+        <button id="submit-button" onClick={() => formatInputtedData(formatOperatorInitials(), formatMitreVectors(), formatSuricataAlerts(), formatDescription(), formatRecommendedRemediation())}>Format!</button>
       </div>
       <div className="output-container">
         <div id="formatted-output"></div>
