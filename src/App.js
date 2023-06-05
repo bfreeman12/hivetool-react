@@ -24,6 +24,9 @@ function App() {
 
 
 
+
+
+
   const [fileHashes, setFileHashes] = useState([]);
   const observableUploadHandler = (event) => {
     const fileList = event.target.files;
@@ -52,6 +55,12 @@ function App() {
       });
   };
 
+
+
+
+
+
+
   var currentdate = new Date();
   var datetime =
     currentdate.getMonth() +
@@ -65,6 +74,13 @@ function App() {
     ":" +
     currentdate.getMinutes() +
     "Z";
+
+
+
+
+
+
+
 
   const [operatorInitials, setOperatorInitials] = useState("");
   const [mitreVectors, setMitreVectors] = useState("");
@@ -140,6 +156,13 @@ function App() {
       recommendedRemediation
     );
   }
+
+  function copyOutputText() {
+    let formattedOutput = document.getElementById("formatted-output");
+    formattedOutput.select();
+    document.execCommand("copy");
+  }
+
   function toggleInstructionsModal() {
     document.getElementById("instructions-page").classList.toggle("visible");
   }
@@ -228,12 +251,18 @@ function App() {
             </label>
           </div>
         </div>
-        <button id="submit-button" onClick={handleFormatOnClick}>
-          Format!
-        </button>
+        <div className="form-button-container">
+          <button id="submit-button" onClick={handleFormatOnClick}>
+            Format
+          </button>
+          <button id="submit-button" onClick={copyOutputText}>
+            Copy Output
+          </button>
+        </div>
       </div>
       <div className="output-container">
-        <textarea id="formatted-output" value={outputText}></textarea>
+        <textarea id="formatted-output" value={outputText}>
+        </textarea>
       </div>
     </div>
   );

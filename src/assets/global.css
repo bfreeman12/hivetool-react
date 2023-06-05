@@ -1,35 +1,44 @@
 :root {
-  --background-color: rgb(6, 11, 37);
-  --hive-yellow: rgba(0, 0, 0, 0);
-  --dark-hive-yellow: rgb(8, 37, 95);
-  --text-color: rgba(255, 255, 255, 0.863);
-  --secondary-text-color: rgb(255, 255, 255);
-  --output-container-color: linear-gradient(0deg, rgb(8, 37, 95), rgb(27, 68, 170));
+  --background-color: #1a1a1a;
+  --hive-yellow: rgba(255, 180, 0, 0.1);
+  --dark-hive-yellow: #ff9b00;
+  --text-color: #ffffff;
+  --secondary-text-color: #ffffff;
+  --output-container-color: #222222;
 }
 
 * {
   color: var(--text-color);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  /* kevin powell, forgive me. */
-  /* overflow-y: hidden; */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  overflow-wrap: break-word;
 }
 
 body {
-  background: var(--background-color);
+  background-color: var(--background-color);
+  margin: 0;
 }
 
 input {
-  background: var(--background-color);
+  background-color: var(--background-color);
   width: 20%;
   color: var(--secondary-text-color);
+  border: none;
 }
 
 textarea {
-  background: var(--background-color);
+  background-color: var(--background-color);
   color: var(--secondary-text-color);
-  /* color: rgb(255, 180, 42); */
+  border: none;
 }
+
+textarea:active {
+  border: none;
+}
+
+button {
+  border: none;
+}
+
 
 .content-container {
   padding: 4rem 16rem;
@@ -39,7 +48,6 @@ textarea {
   gap: 1rem;
   height: 100vh;
   box-sizing: border-box;
-  display: flex;
 }
 
 .input-container {
@@ -51,14 +59,11 @@ textarea {
 .form-container {
   display: flex;
   flex: 1;
-  background: var(--output-container-color);
+  background-color: var(--output-container-color);
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem 2rem 1rem 2rem;
-  flex: 1;
-  /* border: groove 2px rgb(255, 255, 255); */
+  padding: 2rem;
   margin-bottom: 1rem;
-  border-radius: 0.5rem;
 }
 
 .form-gap {
@@ -70,46 +75,44 @@ textarea {
 
 #submit-button {
   color: var(--text-color);
-  background: var(--hive-yellow);
+  background-color: var(--hive-yellow);
   margin-top: 1rem;
-  padding: 0rem 1rem;
+  padding: .25rem;
   width: 20%;
 }
 
 #submit-button:hover {
-  /* color: var(--secondary-text-color); */
-  background: var(--dark-hive-yellow);
+  background-color: var(--dark-hive-yellow);
 }
 
 #submit-button:active {
   color: var(--secondary-text-color);
-  background: var(--hive-yellow);
-  margin-top: 1rem;
-  padding: 0rem 1rem;
+  background-color: var(--hive-yellow);
 }
 
 .output-container {
-  background: var(--output-container-color);
+  /* background-color: var(--output-container-color); */
+  background: linear-gradient(45deg, rgb(119, 66, 66), rgb(48, 48, 48), rgb(187, 127, 15));
   display: flex;
   flex: 1;
-  border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 1px 2px;
   box-sizing: border-box;
-  /* border: groove 2px linear-gradient(90deg black white); */
 }
 
 #formatted-output {
   display: flex;
   flex: 1;
   background-color: var(--background-color);
-  border-radius: 0.5rem;
   padding: 1rem;
   color: var(--secondary-text-color);
+  resize: none;
+  font-weight: 100;
+  letter-spacing: -.01rem;
 }
 
 .upload-div:hover {}
 
-input {
+input[type="file"] {
   width: 150px;
   height: 30px;
 }
@@ -141,19 +144,15 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0.5rem;
-
-  background: var(--output-container-color);
-  /* border: 2px #ffffff dotted; */
+  background-color: var(--output-container-color);
 }
 
 .upload-button:hover {
-  background: rgb(31, 31, 31);
-  background: radial-gradient(rgb(10, 19, 49), rgb(9, 26, 75));
+  background-color: #111111;
 }
 
 .upload-button:active {
-  background: rgb(39, 39, 39);
+  background-color: #333333;
 }
 
 .instructions-button {
@@ -173,14 +172,10 @@ input {
   display: none;
   position: absolute;
   top: 2rem;
-  /* bottom: 2rem; */
   right: 2rem;
   width: 21.5rem;
-  background: var(--output-container-color);
-  border-radius: 0.5rem;
-  /* border: groove 2px white; */
+  background-color: var(--output-container-color);
   padding: 2rem;
-  /* box-sizing: border-box; */
   z-index: 4;
 }
 
@@ -195,4 +190,10 @@ input {
 
 .x-button:hover {
   cursor: pointer;
+}
+
+.form-button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
