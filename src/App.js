@@ -1,15 +1,9 @@
 import "./assets/global.css";
 import React, { useState } from "react";
 import Papa from "papaparse";
-import SparkMD5 from 'spark-md5'
+import SparkMD5 from "spark-md5";
 
 function App() {
-
-
-
-
-
-
   const [currentCsvData, setCurrentCsvData] = useState([{}]);
   const csvUploadHandler = (event) => {
     Papa.parse(event.target.files[0], {
@@ -21,11 +15,6 @@ function App() {
       },
     });
   };
-
-
-
-
-
 
   const [fileHashes, setFileHashes] = useState([]);
   const observableUploadHandler = (event) => {
@@ -48,18 +37,12 @@ function App() {
     Promise.all(promises)
       .then((hashes) => {
         setFileHashes(hashes);
-        console.log(hashes)
+        console.log(hashes);
       })
       .catch((error) => {
-        console.error('Error calculating hash:', error);
+        console.error("Error calculating hash:", error);
       });
   };
-
-
-
-
-
-
 
   var currentdate = new Date();
   var datetime =
@@ -74,13 +57,6 @@ function App() {
     ":" +
     currentdate.getMinutes() +
     "Z";
-
-
-
-
-
-
-
 
   const [operatorInitials, setOperatorInitials] = useState("");
   const [mitreVectors, setMitreVectors] = useState("");
@@ -107,9 +83,9 @@ function App() {
     );
 
     fileHashes.forEach((entry) => {
-      let formattedFileHash = entry["filename"] + ' - ' + entry["hash"]
-      formattedFileHashes.push("\n" + formattedFileHash)
-    })
+      let formattedFileHash = entry["filename"] + " - " + entry["hash"];
+      formattedFileHashes.push("\n" + formattedFileHash);
+    });
 
     currentCsvData.forEach((entry) => {
       if (!uniqueSrcIPs.includes(" " + entry["Src IP"])) {
@@ -131,29 +107,29 @@ function App() {
 
     setOutputText(
       "**Time Observed:** " +
-      datetime +
-      " by: " +
-      operatorInitials +
-      "\n\n**Src IP:**  " +
-      uniqueSrcIPs +
-      "\n\n**Src Ports:**  " +
-      uniqueSrcPorts +
-      "\n\n**Dst IP:**  " +
-      uniqueDstIPs +
-      "\n\n**Dst Ports:**  " +
-      uniqueDstPorts +
-      "\n\n**Community IDs:**\n" +
-      uniqueCommunityIds +
-      "\n\n**Observable MD5 Hashes:**\n" +
-      formattedFileHashes +
-      "** MITRE Vectors of Attack:**\n\n" +
-      mitreVectors +
-      "\n\n**Suricata Alerts:**\n\n" +
-      suricataAlerts +
-      "\n\n**Description:**\n\n" +
-      description +
-      "\n\n**Recommended Remediation:**\n\n" +
-      recommendedRemediation
+        datetime +
+        " by: " +
+        operatorInitials +
+        "\n\n**Src IP:**  " +
+        uniqueSrcIPs +
+        "\n\n**Src Ports:**  " +
+        uniqueSrcPorts +
+        "\n\n**Dst IP:**  " +
+        uniqueDstIPs +
+        "\n\n**Dst Ports:**  " +
+        uniqueDstPorts +
+        "\n\n**Community IDs:**\n" +
+        uniqueCommunityIds +
+        "\n\n**Observable MD5 Hashes:**\n" +
+        formattedFileHashes +
+        "\n\n** MITRE Vectors of Attack:**\n\n" +
+        mitreVectors +
+        "\n\n**Suricata Alerts:**\n\n" +
+        suricataAlerts +
+        "\n\n**Description:**\n\n" +
+        description +
+        "\n\n**Recommended Remediation:**\n\n" +
+        recommendedRemediation
     );
   }
 
@@ -261,8 +237,7 @@ function App() {
         </div>
       </div>
       <div className="output-container">
-        <textarea id="formatted-output" value={outputText}>
-        </textarea>
+        <textarea id="formatted-output" value={outputText}></textarea>
       </div>
     </div>
   );
