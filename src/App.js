@@ -1,19 +1,16 @@
 import "./assets/global.css";
 import React, { useState } from "react";
 import Papa from "papaparse";
+import SparkMD5 from 'spark-md5'
 
 function App() {
-  //TODO: TAKE ALL INPUT AND DISPLAY CORRECTLY IN THE OUTPUT TEXTAREA
-  // INITIALS
-  // ATTACK VECTOR
-  // ALERT
-  // DESCRIPTION
-  // REMEDIATION
-  //TODO: PARSE UPLOADED CSV FILES
-  //TODO: SHA256 HASH FILES AND RETURN THE HASHES TO TEXT AREA
+
+
+
+
+
 
   const [currentCsvData, setCurrentCsvData] = useState([{}]);
-
   const csvUploadHandler = (event) => {
     Papa.parse(event.target.files[0], {
       header: true,
@@ -23,6 +20,36 @@ function App() {
         console.log(results.data);
       },
     });
+  };
+
+
+
+  const [fileHashes, setFileHashes] = useState([]);
+  const observableUploadHandler = (event) => {
+    const fileList = event.target.files;
+    const promises = Array.from(fileList).map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const fileBuffer = new Uint8Array(event.target.result);
+          const hash = SparkMD5.ArrayBuffer.hash(fileBuffer);
+          resolve({ filename: file.name, hash: hash });
+        };
+        reader.onerror = (event) => {
+          reject(event.target.error);
+        };
+        reader.readAsArrayBuffer(file);
+      });
+    });
+
+    Promise.all(promises)
+      .then((hashes) => {
+        setFileHashes(hashes);
+        console.log(hashes)
+      })
+      .catch((error) => {
+        console.error('Error calculating hash:', error);
+      });
   };
 
   var currentdate = new Date();
@@ -53,6 +80,7 @@ function App() {
     var uniqueDstIPs = [];
     var uniqueDstPorts = [];
     var uniqueCommunityIds = [];
+    var formattedFileHashes = [];
 
     setOperatorInitials(document.getElementById("initials-input").value);
     setMitreVectors(document.getElementById("attack-vector-input").value);
@@ -61,6 +89,12 @@ function App() {
     setRecommendedRemediation(
       document.getElementById("remediation-input").value
     );
+
+    fileHashes.forEach((entry) => {
+      let formattedFileHash = entry["filename"] + ' - ' + entry["hash"]
+      formattedFileHashes.push("\n" + formattedFileHash)
+    })
+
     currentCsvData.forEach((entry) => {
       if (!uniqueSrcIPs.includes(" " + entry["Src IP"])) {
         uniqueSrcIPs.push(" " + entry["Src IP"]);
@@ -81,27 +115,29 @@ function App() {
 
     setOutputText(
       "**Time Observed:** " +
-        datetime +
-        " by: " +
-        operatorInitials +
-        "\n\n**Src IP:**  " +
-        uniqueSrcIPs +
-        "\n\n**Src Ports:**  " +
-        uniqueSrcPorts +
-        "\n\n**Dst IP:**  " +
-        uniqueDstIPs +
-        "\n\n**Dst Ports:**  " +
-        uniqueDstPorts +
-        "\n\n**Community IDs:**\n" +
-        uniqueCommunityIds +
-        "\n\n**Observable Hashes:**\n\n**MITRE Vectors of Attack:**\n\n" +
-        mitreVectors +
-        "\n\n**Suricata Alerts:**\n\n" +
-        suricataAlerts +
-        "\n\n**Description:**\n\n" +
-        description +
-        "\n\n**Recommended Remediation:**\n\n" +
-        recommendedRemediation
+      datetime +
+      " by: " +
+      operatorInitials +
+      "\n\n**Src IP:**  " +
+      uniqueSrcIPs +
+      "\n\n**Src Ports:**  " +
+      uniqueSrcPorts +
+      "\n\n**Dst IP:**  " +
+      uniqueDstIPs +
+      "\n\n**Dst Ports:**  " +
+      uniqueDstPorts +
+      "\n\n**Community IDs:**\n" +
+      uniqueCommunityIds +
+      "\n\n**Observable MD5 Hashes:**\n" +
+      formattedFileHashes +
+      "** MITRE Vectors of Attack:**\n\n" +
+      mitreVectors +
+      "\n\n**Suricata Alerts:**\n\n" +
+      suricataAlerts +
+      "\n\n**Description:**\n\n" +
+      description +
+      "\n\n**Recommended Remediation:**\n\n" +
+      recommendedRemediation
     );
   }
   function toggleInstructionsModal() {
@@ -127,8 +163,7 @@ function App() {
           X
         </div>
         <h4>STEP 1</h4>
-        <p>In arkime, export the .csv for all sessions with columns:</p>
-        <p>srcIp,srcPort,dstIp,dstPort,communityId</p>
+        <p>In arkime, export the .csv for all sessions.</p>
         <p>Then, drop it in the .csv drop area.</p>
         <h4>STEP 2</h4>
         <p>
@@ -188,6 +223,7 @@ function App() {
                 type="file"
                 style={{ display: "none" }}
                 multiple
+                onChange={observableUploadHandler}
               />
             </label>
           </div>
