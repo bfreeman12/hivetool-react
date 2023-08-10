@@ -1,7 +1,7 @@
 import "./assets/global.css";
 import React, { useState } from "react";
 import Papa from "papaparse";
-import SparkMD5 from 'spark-md5'
+import SparkMD5 from "spark-md5";
 
 function App() {
 
@@ -44,18 +44,12 @@ function App() {
     Promise.all(promises)
       .then((hashes) => {
         setFileHashes(hashes);
-        console.log(hashes)
+        console.log(hashes);
       })
       .catch((error) => {
-        console.error('Error calculating hash:', error);
+        console.error("Error calculating hash:", error);
       });
   };
-
-
-
-
-
-
 
   var currentdate = new Date();
   var datetime =
@@ -109,9 +103,9 @@ function App() {
     );
 
     fileHashes.forEach((entry) => {
-      let formattedFileHash = entry["filename"] + ' - ' + entry["hash"]
-      formattedFileHashes.push("\n" + formattedFileHash)
-    })
+      let formattedFileHash = entry["filename"] + " - " + entry["hash"];
+      formattedFileHashes.push("\n" + formattedFileHash);
+    });
 
     currentCsvData.forEach((entry) => {
       if (!uniqueSrcIPs.includes(" " + entry["Src IP"])) {
@@ -275,8 +269,7 @@ function App() {
         </div>
       </div>
       <div className="output-container">
-        <textarea id="formatted-output" value={outputText}>
-        </textarea>
+        <textarea id="formatted-output" value={outputText}></textarea>
       </div>
     </div>
   );
