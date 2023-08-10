@@ -8,8 +8,6 @@ function App() {
 
 
 
-
-
   const [currentCsvData, setCurrentCsvData] = useState([{}]);
   const csvUploadHandler = (event) => {
     Papa.parse(event.target.files[0], {
@@ -21,8 +19,6 @@ function App() {
       },
     });
   };
-
-
 
 
 
@@ -82,6 +78,10 @@ function App() {
 
 
 
+
+
+  const [overview, setOverview] = useState("");
+  const [timeline, setTimeline] = useState("");
   const [operatorInitials, setOperatorInitials] = useState("");
   const [mitreVectors, setMitreVectors] = useState("");
   const [suricataAlerts, setSuricataAlerts] = useState("");
@@ -98,6 +98,8 @@ function App() {
     var uniqueCommunityIds = [];
     var formattedFileHashes = [];
 
+    setOverview(document.getElementById("overview-input").value);
+    setTimeline(document.getElementById("timeline-input").value);
     setOperatorInitials(document.getElementById("initials-input").value);
     setMitreVectors(document.getElementById("attack-vector-input").value);
     setSuricataAlerts(document.getElementById("alert-input").value);
@@ -130,7 +132,11 @@ function App() {
     });
 
     setOutputText(
-      "**Time Observed:** " +
+      "**Overview:**\n\n" +
+      "     " + overview +
+      "\n\n**Timeline:**\n\n" +
+      "     " + timeline +
+      "\n\n**Time Observed:** " +
       datetime +
       " by: " +
       operatorInitials +
@@ -143,17 +149,17 @@ function App() {
       "\n\n**Dst Ports:**  " +
       uniqueDstPorts +
       "\n\n**Community IDs:**\n" +
-      uniqueCommunityIds +
+      "     " + uniqueCommunityIds +
       "\n\n**Observable MD5 Hashes:**\n" +
-      formattedFileHashes +
+      "     " + formattedFileHashes +
       "** MITRE Vectors of Attack:**\n\n" +
-      mitreVectors +
+      "     " + mitreVectors +
       "\n\n**Suricata Alerts:**\n\n" +
-      suricataAlerts +
+      "     " + suricataAlerts +
       "\n\n**Description:**\n\n" +
-      description +
+      "     " + description +
       "\n\n**Recommended Remediation:**\n\n" +
-      recommendedRemediation
+      "     " + recommendedRemediation
     );
   }
 
@@ -216,8 +222,16 @@ function App() {
             <textarea id="alert-input" />
           </div>
           <div className="form-gap">
+            <label>Overview:</label>
+            <textarea id="overview-input" />
+          </div>
+          <div className="form-gap">
             <label>Description:</label>
             <textarea id="description-input" />
+          </div>
+          <div className="form-gap">
+            <label>Timeline:</label>
+            <textarea id="timeline-input" />
           </div>
           <div className="form-gap">
             <label>Recommended Remediation:</label>
@@ -252,7 +266,7 @@ function App() {
           </div>
         </div>
         <div className="form-button-container">
-          <button id="submit-button" onClick={handleFormatOnClick}>
+          <button id="submit-button" onMouseDown={handleFormatOnClick} onMouseUp={handleFormatOnClick}>
             Format
           </button>
           <button id="submit-button" onClick={copyOutputText}>
