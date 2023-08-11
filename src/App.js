@@ -104,7 +104,7 @@ function App() {
 
     fileHashes.forEach((entry) => {
       let formattedFileHash = entry["filename"] + " - " + entry["hash"];
-      formattedFileHashes.push("\n" + formattedFileHash);
+      formattedFileHashes.push("  \n" + formattedFileHash);
     });
 
     currentCsvData.forEach((entry) => {
@@ -120,8 +120,8 @@ function App() {
       if (!uniqueDstPorts.includes(" " + entry[" Dst Port"])) {
         uniqueDstPorts.push(" " + entry[" Dst Port"]);
       }
-      if (!uniqueCommunityIds.includes("\n" + entry[" Community Id"])) {
-        uniqueCommunityIds.push("\n" + entry[" Community Id"]);
+      if (!uniqueCommunityIds.includes("  \n" + entry[" Community Id"])) {
+        uniqueCommunityIds.push("  \n" + entry[" Community Id"]);
       }
     });
 
@@ -146,7 +146,7 @@ function App() {
       "     " + uniqueCommunityIds +
       "\n\n**Observable MD5 Hashes:**\n" +
       "     " + formattedFileHashes +
-      "** MITRE Vectors of Attack:**\n\n" +
+      "\n\n** MITRE Vectors of Attack:**\n\n" +
       "     " + mitreVectors +
       "\n\n**Suricata Alerts:**\n\n" +
       "     " + suricataAlerts +
